@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import TodoForm from "./components/TodoComponents/TodoForm";
 import TodoList from "./components/TodoComponents/TodoList";
@@ -29,10 +29,11 @@ class App extends React.Component {
         ? JSON.parse(localStorage.getItem("todos"))
         : todoData
     };
+    //console.log("initialState from constructor", this.state.todo);
   }
 
   toggleItem = id => {
-    console.log(id);
+    //console.log(id);
     this.setState({
       todo: this.state.todo.map(item => {
         if (item.id === id) {
@@ -47,12 +48,13 @@ class App extends React.Component {
   addItem = itemName => {
     const newItem = {
       task: itemName,
-      id: Date.now,
+      id: Date.now(),
       completed: false
     };
     this.setState({
       todo: [...this.state.todo, newItem]
     });
+    // console.log("newTask from user", this.state.todo);
   };
 
   clearCompleted = () => {
@@ -65,6 +67,7 @@ class App extends React.Component {
     if (prevState.todo !== this.state.todo) {
       localStorage.setItem("todos", JSON.stringify(this.state.todo));
     }
+    //console.log("sideEffect todo", this.state.todo);
   }
 
   // useEffect(()=>{
