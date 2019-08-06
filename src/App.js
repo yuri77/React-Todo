@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import TodoForm from "./components/TodoComponents/TodoForm";
 import TodoList from "./components/TodoComponents/TodoList";
@@ -25,7 +25,9 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todo: todoData
+      todo: localStorage.getItem("todos")
+        ? JSON.parse(localStorage.getItem("todos"))
+        : todoData
     };
   }
 
@@ -58,6 +60,16 @@ class App extends React.Component {
       todo: this.state.todo.filter(item => !item.completed)
     });
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todo !== this.state.todo) {
+      localStorage.setItem("todos", JSON.stringify(this.state.todo));
+    }
+  }
+
+  // useEffect(()=>{
+  //   localStorage.setItem("todos", JSON.stringify(this.state.todo));
+  // },[this.state.todo])
 
   render() {
     return (
